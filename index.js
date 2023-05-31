@@ -7,17 +7,23 @@ const app = express()
 app.get('/', (req, res)=>{
     
     let anoFato = req.query.ano
-
-    if (validaAno(anoFato) === true){
-        let fato = servicoBuscarFato(anoFato)
-        res.json({ano: fato})
+    if(anoFato){
+        if(validaAno(anoFato) === true){
+            let fato = servicoBuscarFato(anoFato)
+            res.json({ano: fato})
+        }
+        res.status(400).json({'erro':'Ano Invalido!'})
+    }else{
+        res.status(200).json({'mensagem':'Informe uma data entre 1920 e 2022.'})   
     }
-    res.status(400).json({'Erro':'Ano Invalido!'})
 })
 
 app.listen(8080, ()=>{
     let data = new Date()
+    let dia = data.getDate()
+    let mes = data.getMonth()
+    let ano = data.getFullYear()
     let horas = data.getHours()
     let minutos = data.getMinutes()
-    console.log(`Servidor Rodando na porta 8080, desde: ${horas} Hrs : ${minutos} min`)
+    console.log(`Servidor Rodando na porta 8080, desde: ${dia}/${mes+1}/${ano} - ${horas} Hrs : ${minutos} min`)
 })
