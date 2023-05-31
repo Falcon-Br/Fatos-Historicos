@@ -11,8 +11,9 @@ app.get('/', (req, res)=>{
         if(validaAno(anoFato) === true){
             let fato = servicoBuscarFato(anoFato)
             res.json({ano: fato})
+        }else{
+            res.status(400).json({'erro':'Ano Invalido!'})
         }
-        res.status(400).json({'erro':'Ano Invalido!'})
     }else{
         res.status(200).json({'mensagem':'Informe uma data entre 1920 e 2022.'})   
     }
